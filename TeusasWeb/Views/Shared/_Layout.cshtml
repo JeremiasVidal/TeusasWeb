@@ -7,36 +7,114 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TeusasWeb.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TeusasWeb</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+        <nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #e2edfb;">
+            <div class="container py-2 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+
+                <!-- Logo más grande y proporcionado -->
+                <a class="navbar-brand mb-2 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/img/logo.jpg" alt="Logo" style="max-height: 80px; width: auto;" class="img-fluid" />
+                </a>
+
+                <!-- Buscador más chico -->
+                <form class="w-100 w-lg-30 mb-2 mb-lg-0 mx-lg-4" role="search">
+                    <div class="input-group shadow-sm">
+                        <input type="search" class="form-control rounded-start border-0" placeholder="Buscar..." aria-label="Buscar">
+                        <button class="btn btn-outline-secondary rounded-end" type="submit">
+                            <i class="bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Botón hamburguesa (visible en móviles) -->
+                <button class="navbar-toggler mb-2 bg-light shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span><i class="bi bi-list fs-3 text-dark"></i></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+
+
+                <!-- Menú de navegación -->
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav d-flex flex-column flex-lg-row gap-2 align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link px-3 py-1 rounded text-dark d-flex flex-column align-items-center small" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-fill fs-5"></i>
+                                Inicio
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link px-3 py-1 rounded text-dark d-flex flex-column align-items-center small" asp-controller="Producto" asp-action="Index">
+                                <i class="bi bi-shop-window fs-5"></i>
+                                Catálogo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-1 rounded text-dark d-flex flex-column align-items-center small" asp-controller="Categorias" asp-action="Index">
+                                <i class="bi bi-tags-fill fs-5"></i>
+                                Ofertas
+                            </a>
+                        </li>
+                        @{
+                            string usuario = Context.Session.GetString("nombreUsuario");
+                        }
+
+                        @if (!string.IsNullOrEmpty(usuario))
+                        {
+                            <!-- Usuario logueado - Dropdown -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle px-3 py-1 rounded text-dark d-flex flex-column align-items-center small"
+                                   href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle fs-5"></i>
+                                    @usuario
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-4" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Carrito" asp-action="Index"><i class="bi bi-cart"></i> Mi carrito</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" asp-controller="Usuario" asp-action="Logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <!-- No logueado - botón Iniciar sesión -->
+                            <li class="nav-item">
+                                <a class="nav-link px-3 py-1 rounded text-dark d-flex flex-column text-nowrap align-items-center small" asp-controller="Usuario" asp-action="Login">
+                                    <i class="bi bi-person-circle fs-5"></i>
+                                    Iniciar sesión
+                                </a>
+                            </li>
+                        }
+                        <!-- Siempre visible: WhatsApp -->
+                        <li class="nav-item">
+                            <a class="btn btn-success btn-sm px-3 text-white d-flex flex-column align-items-center" href="https://wa.me/59892444003" target="_blank">
+                                <i class="bi bi-whatsapp fs-5"></i>
+                                Whatsapp
+                            </a>
                         </li>
                     </ul>
                 </div>
+
+
             </div>
         </nav>
     </header>
+
+
+
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted nav_logo">
         <div class="container">
             &copy; 2025 - TeusasWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

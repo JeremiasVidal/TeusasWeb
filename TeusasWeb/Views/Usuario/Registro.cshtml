@@ -1,0 +1,64 @@
+﻿@model TeusasWeb.Models.UsuarioModel
+
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Registrarse</h2>
+
+                    @if (!string.IsNullOrEmpty(ViewBag.msg as string))
+                    {
+                        <p class="text-danger text-center fw-semibold">@ViewBag.msg</p>
+                    }
+
+                    <form asp-action="Registro" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="nombre" class="form-label">Nombre de usuario</label>
+                            <input asp-for="nombre" class="form-control" placeholder="Ingrese su nombre de usuario" />
+                            <span asp-validation-for="nombre" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="contrasenia" class="form-label">Contraseña</label>
+                            <input asp-for="contrasenia" type="password" class="form-control" placeholder="Cree una contraseña" />
+                            <span asp-validation-for="contrasenia" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="telefono" class="form-label">Teléfono</label>
+                            <input asp-for="telefono" class="form-control" placeholder="Ingrese su teléfono" />
+                            <span asp-validation-for="telefono" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="direccion" class="form-label">Dirección</label>
+                            <input asp-for="direccion" class="form-control" placeholder="Ingrese su dirección" />
+                            <span asp-validation-for="direccion" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Registrarme</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <small>¿Ya tenés cuenta? <a asp-controller="Usuario" asp-action="Login">Iniciar sesión</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
