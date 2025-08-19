@@ -54,11 +54,12 @@ namespace TeusasWeb.Controllers
                 // Si el login es exitoso (código de estado 200), guarda los datos del usuario en la sesión.
                 if (respuesta.Result.IsSuccessStatusCode)
                 {
-                    UsuarioModel usuarioModel = JsonConvert.DeserializeObject<UsuarioModel>(response.Result);
+                    UsuarioTokenModel usuarioModel = JsonConvert.DeserializeObject<UsuarioTokenModel>(response.Result);
                     HttpContext.Session.SetString("token", usuarioModel.Token);
-                    HttpContext.Session.SetString("nombreUsuario", usuario.nombre);
+                    HttpContext.Session.SetString("nombreUsuario", usuarioModel.usuarioActual.nombre);
+                    HttpContext.Session.SetString("rol", usuarioModel.usuarioActual.rol);
 
-                 
+
 
                     // Redirige al usuario a la página principal (Index) del controlador Home.
                     return RedirectToAction("Index", "Home");
@@ -125,9 +126,11 @@ namespace TeusasWeb.Controllers
                 // Si el regstro es exitoso (código de estado 200), guarda los datos del usuario en la sesión.
                 if (respuesta.Result.IsSuccessStatusCode)
                 {
-                    UsuarioModel usuarioModel = JsonConvert.DeserializeObject<UsuarioModel>(response.Result);
+                    UsuarioTokenModel usuarioModel = JsonConvert.DeserializeObject<UsuarioTokenModel>(response.Result);
                     HttpContext.Session.SetString("token", usuarioModel.Token);
-                    HttpContext.Session.SetString("nombreUsuario", usuario.nombre);
+                    HttpContext.Session.SetString("nombreUsuario", usuarioModel.usuarioActual.nombre);
+                    HttpContext.Session.SetString("rol", usuarioModel.usuarioActual.rol);
+
 
 
 

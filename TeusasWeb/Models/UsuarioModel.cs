@@ -8,7 +8,7 @@
         public string contrasenia { get; set; }
         public string telefono { get; set; }
         public string direccion { get; set; }
-        public string Token { get; set; }
+        public string? rol { get; set; }
 
 
 
